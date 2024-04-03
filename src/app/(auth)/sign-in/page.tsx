@@ -16,7 +16,6 @@ import {
 } from "@/lib/validators/account-credentials-validator"
 import { trpc } from "@/trpc/client"
 import { toast } from "sonner"
-import { ZodError } from "zod"
 import { useRouter, useSearchParams } from "next/navigation"
 
 const Page = () => {
@@ -24,7 +23,6 @@ const Page = () => {
   const router = useRouter()
   const isSeller = searchParams.get("as") === "seller"
   const origin = searchParams.get("origin")
-  console.log("origin", origin)
 
   const continueAsSeller = () => {
     router.push("?as=seller")
@@ -46,12 +44,11 @@ const Page = () => {
     onSuccess: async () => {
       toast.success("Signed in successfully")
 
-      router.refresh()
-
       if (origin) {
         router.push(`/${origin}`)
         return
       }
+      router.refresh()
 
       if (isSeller) {
         router.push("/sell")
