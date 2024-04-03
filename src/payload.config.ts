@@ -5,6 +5,8 @@ import path from "path"
 import dotend from "dotenv"
 import { buildConfig } from "payload/config"
 import { Users } from "./collections/Users"
+import { Products } from "./collections/Products/Products"
+import { Media } from "./collections/Media"
 
 dotend.config({
   path: path.resolve(__dirname, "../.env"),
@@ -12,7 +14,7 @@ dotend.config({
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || "",
-  collections: [Users],
+  collections: [Users, Products, Media],
   routes: {
     admin: "/sell",
   },
