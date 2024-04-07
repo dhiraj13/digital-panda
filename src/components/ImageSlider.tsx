@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
@@ -6,7 +8,7 @@ import type SwiperType from "swiper"
 import { Pagination } from "swiper/modules"
 import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
-import { ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 interface ImageSliderProps {
   urls: string[]
@@ -64,7 +66,7 @@ const ImageSlider = ({ urls }: ImageSliderProps) => {
           })}
           aria-label="previous image"
         >
-          <ChevronRight className="h-4 w-4 text-zinc-700" />{" "}
+          <ChevronLeft className="h-4 w-4 text-zinc-700" />{" "}
         </button>
       </div>
 
