@@ -10,6 +10,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { When } from "react-if"
 
 const Page = () => {
   const { items, removeItem } = useCart()
@@ -202,9 +203,9 @@ const Page = () => {
                 className="w-full"
                 size="lg"
               >
-                {isLoading ? (
+                <When condition={isLoading}>
                   <Loader2 className="w-4 h-4 animate-spin mr-1.5" />
-                ) : null}
+                </When>
                 Checkout
               </Button>
             </div>
