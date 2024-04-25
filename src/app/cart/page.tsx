@@ -213,7 +213,9 @@ const Page = () => {
               </Button> */}
               <If condition={showPaypal}>
                 <Then>
-                  <PayPal orderDetail={{ totalAmount: cartTotal + fee }} />
+                  <PayPal
+                    orderDetail={{ totalAmount: (cartTotal + fee).toString() }}
+                  />
                 </Then>
                 <Else>
                   <Button
