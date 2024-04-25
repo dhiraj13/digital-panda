@@ -80,6 +80,50 @@ export const paymentRouter = router({
       }
     }),
 
+  createOrder: privateProcedure
+    .input(
+      z.object({
+        productIds: z.array(z.string()),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { user } = ctx
+      let { productIds } = input
+
+      if (productIds.length === 0) {
+        throw new TRPCError({ code: "BAD_REQUEST" })
+      }
+
+      const payload = await getPayloadClient()
+
+      const { docs: products } = await payload.find({
+        collection: "products",
+        where: {
+          id: {
+            in: productIds,
+          },
+        },
+      })
+
+      const filteredProducts = products.filter((prod) => Boolean(prod.priceId))
+
+      try {
+        const order = await payload.create({
+          collection: "orders",
+          data: {
+            _isPaid: true,
+            products: filteredProducts.map((prod) => prod.id),
+            user: user.id,
+          },
+        })
+
+        return order
+      } catch (error) {
+        console.log(error)
+        return null
+      }
+    }),
+
   pollOrderStatus: privateProcedure
     .input(
       z.object({
